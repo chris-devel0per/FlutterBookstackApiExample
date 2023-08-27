@@ -6,6 +6,10 @@ This Flutter/Dart script demonstrates the usage of the BookStackAPI library to i
 ![Dart](https://img.shields.io/badge/Dart-%5E2.15.0-blue)
 ![BookStackAPI](https://img.shields.io/badge/BookStackAPI-%5E1.0.0-green)
 
+## First of all: 
+
+Check out Bookstack: [LINK TO BOOKSTACK](https://github.com/BookStackApp/BookStack)
+
 ## Getting Started
 
 1. Clone this repository to your local machine:
