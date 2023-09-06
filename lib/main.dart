@@ -3,8 +3,7 @@ import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/a11y-dark.dart';
 
 import 'controller/server_info.dart';
-
-import 'controller/methodshandler.dart';
+import 'service/endpoints.dart';
 
 void main() {
   runApp(const MyApp());
@@ -94,35 +93,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  MethodsHandler methodsHandlerclass = MethodsHandler();
-
-  List<String> attachmentsMethods = ['list', 'create', 'read', 'update', 'delete'];
-  List<String> booksMethods = ['list', 'create', 'read', 'update', 'delete', 'export-html', 'export-pdf', 'export-plain-text', 'export-markdown'];
-  List<String> chaptersMethods = ['list', 'create', 'read', 'update', 'delete', 'export-html', 'export-pdf', 'export-plain-text', 'export-markdown'];
-  List<String> pagesMethods = ['list', 'create', 'read', 'update', 'delete', 'export-html', 'export-pdf', 'export-plain-text', 'export-markdown'];
-  List<String> imageGalleryMethods = ['list', 'create', 'read', 'update', 'delete'];
-  List<String> searchMethods = ['all'];
-  List<String> shelvesMethods = ['list', 'create', 'read', 'update', 'delete'];
-  List<String> usersMethods = ['list', 'create', 'read', 'update', 'delete'];
-  List<String> rolesMethods = ['list', 'create', 'read', 'update', 'delete'];
-  List<String> recycleBinMethods = ['list', 'restore', 'destroy'];
-  List<String> contentPermissionsMethods = ['read', 'update'];
+  Endpoints endpoints = Endpoints();
+  Map<String, List<String>> allMethods = {};
 
   bool menu = false;
-
-  Map<String, List<String>> allMethods = {
-    'ATTACHMENTS': [],
-    'BOOKS': [],
-    'CHAPTERS': [],
-    'PAGES': [],
-    'IMAGE_GALLERY': [],
-    'SEARCH': [],
-    'SHELVES': [],
-    'USERS': [],
-    'ROLES': [],
-    'RECYCLE_BIN': [],
-    'CONTENT_PERMISSIONS': [],
-  };
 
   var response = '''
   NO REQUEST YET!!
@@ -130,19 +104,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    allMethods = {
-      'ATTACHMENTS': attachmentsMethods,
-      'BOOKS': booksMethods,
-      'CHAPTERS': chaptersMethods,
-      'PAGES': pagesMethods,
-      'IMAGE_GALLERY': imageGalleryMethods,
-      'SEARCH': searchMethods,
-      'SHELVES': shelvesMethods,
-      'USERS': usersMethods,
-      'ROLES': rolesMethods,
-      'RECYCLE_BIN': recycleBinMethods,
-      'CONTENT_PERMISSIONS': contentPermissionsMethods,
-    };
+    allMethods = endpoints.all();
 
     super.initState();
   }
@@ -167,8 +129,8 @@ class _MainPageState extends State<MainPage> {
             Visibility(
               visible: menu,
               child: Column(
-                children: allMethods.keys.map((category) {
-                  List<String> methods = allMethods[category] ?? [];
+                children: allMethods.keys.map((controllerLabel) {
+                  List<String> methods = allMethods[controllerLabel] ?? [];
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +138,7 @@ class _MainPageState extends State<MainPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          category,
+                          controllerLabel,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -189,7 +151,7 @@ class _MainPageState extends State<MainPage> {
                             String methodName = methods[innerIndex];
                             return ElevatedButton(
                               onPressed: () async{
-                                response = await methodsHandlerclass.mh(category, methodName);
+                                response = await endpoints.call(controllerLabel, methodName);
                                 setState(() {
                                   menu=false;
                                 });

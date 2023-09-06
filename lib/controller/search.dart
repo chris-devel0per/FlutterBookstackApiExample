@@ -1,7 +1,17 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
 
-class Search {
+class Search extends ApiController {
+
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Search', endpoints: {
+      'all': all,
+    });
+  }
+
   Future<String> all() async{
     String page = '1';
     String count = '2';

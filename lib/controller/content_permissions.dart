@@ -1,8 +1,17 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class ContentPermissions {
+class ContentPermissions extends ApiController {
+
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Content Permissions', endpoints: {
+      'read': read,
+      'update': notImplemented,
+    });
+  }
 
   Future<String> read() async{
     String contentType = 'page';

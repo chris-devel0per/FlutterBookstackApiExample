@@ -1,8 +1,21 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Users {
+class Users extends ApiController {
+
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Users', endpoints: {
+      'list': list,
+      'create': create,
+      'read': read,
+      'update': update,
+      'delete': delete,
+    });
+  }
 
   Future<String> list() async{
     print('Trying List');
