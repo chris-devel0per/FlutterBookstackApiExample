@@ -1,11 +1,21 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http_parser/http_parser.dart';
+class ImageGallery extends ApiController {
 
-class image_gallery {
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Image Gallery', endpoints: {
+      'list': list,
+      'create': create,
+      'read': read,
+      'update': update,
+      'delete': delete,
+    });
+  }
 
   Future<String> list() async{
     String url = '$urlFull/api/image-gallery';

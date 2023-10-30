@@ -1,11 +1,28 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Chapters {
+class Chapters extends ApiController {
+
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Chapters', endpoints: {
+      'list': list,
+      'create': create,
+      'read': read,
+      'update': update,
+      'delete': delete,
+      'export-html': exportHtml,
+      'export-pdf': exportPdf,
+      'export-plain-text': exportPlain,
+      'export-markdown': exportMarkdown,
+    });
+  }
 
   Future<String> list() async{
-    String url = '$urlFull/api/image-gallery';
+    String url = '$urlFull/api/chapters';
     var response = await http.get(Uri.parse(url), headers: headers);
 
     return response.body;

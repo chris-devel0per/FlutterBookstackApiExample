@@ -1,8 +1,21 @@
+import '../service/endpoints.dart';
+import 'api_controller.dart';
 import 'server_info.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Roles {
+class Roles extends ApiController {
+
+  @override
+  EndpointControllerInfo info() {
+    return EndpointControllerInfo(label: 'Roles', endpoints: {
+      'list': list,
+      'create': create,
+      'read': read,
+      'update': update,
+      'delete': delete,
+    });
+  }
 
   Future<String> list() async{
     print('Trying List');
