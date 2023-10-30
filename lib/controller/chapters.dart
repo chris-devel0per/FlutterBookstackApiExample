@@ -22,7 +22,7 @@ class Chapters extends ApiController {
   }
 
   Future<String> list() async{
-    String url = '$urlFull/api/image-gallery';
+    String url = '$urlFull/api/chapters';
     var response = await http.get(Uri.parse(url), headers: headers);
 
     return response.body;
